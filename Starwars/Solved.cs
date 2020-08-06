@@ -10,6 +10,9 @@ namespace Starwars
     {
         public IEnumerable<Planet> Opgave1(List<Planet> planets)
         {
+            //ToLower ville være interessant her
+            var result = planets.Where(x => x.Name.ToLower().StartsWith("m"));
+
             var result = planets.Where(x => x.Name.StartsWith("M"));
 
             return result;
@@ -22,6 +25,9 @@ namespace Starwars
         }
         public IEnumerable<Planet> Opgave3(List<Planet> planets)
         {
+            //Normal sætter man sine udtryk anerledes
+            var result = planets.Where(x => x.Name.Length > 6 && x.Name.Length < 15);
+
             var result = planets.Where(x => x.Name.Length > 6 && 15 > x.Name.Length);
 
             return result;
@@ -53,7 +59,14 @@ namespace Starwars
         }
         public IEnumerable<Planet> Opgave8(List<Planet> planets)
         {
+           //Din linie bliver lang, måske skulle du nedbryde linien, det gør din kode mere læsevenlig 
+            var result = planets.Where(x => x.RotationPeriod < 30 || x.SurfaceWater > 50)
+                                   .Where(x => x.Name.ToLower().Contains("ba"))
+                                   .OrderBy(x => x.Name)
+                                   .ThenBy(x => x.SurfaceWater)
+                                   .ThenBy(x => x.RotationPeriod);
 
+            
             var result = planets.Where(x => x.RotationPeriod < 30 || x.SurfaceWater > 50).Where(x => x.Name.ToLower().Contains("ba"))
                 .OrderBy(x => x.Name).ThenBy(x => x.SurfaceWater).ThenBy(x => x.RotationPeriod);
 
@@ -66,15 +79,17 @@ namespace Starwars
 
             return result;
         }
+        
+        //Husk at kommentere dine metoder
         public double CalculateSurfaceAreaByDiameter(double diameter)
         {
             double radius = diameter / 2;
             double surfaceArea = Math.PI * 4 * Math.Pow(radius, 2);
             return surfaceArea;
-        }
+        }//Hvorfor ikke noget mellemrum?
         public IEnumerable<Planet> Opgave10(List<Planet> planets)
         {
-
+//Hvorfor alle disse mellemrum
 
             var result = planets.Where(x => x.Diameter > 0 && x.Population > 0).OrderBy(x => CalculateSurfaceAreaByDiameter(x.Diameter) / x.Population);
 
@@ -129,6 +144,7 @@ namespace Starwars
         }
         public IEnumerable<Planet> Opgave15(List<Planet> planets)
         {
+            //Interessant løsning :)
             string[] arr = new string[] { "aa", "ee", "ii", "oo", "uu", "yy" };
             var result = planets.Where(x => StringArr(x.Name, arr));
             return result;
